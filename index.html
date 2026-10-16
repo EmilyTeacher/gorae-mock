@@ -6488,7 +6488,31 @@ const LS = {
   set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 };
 const rid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2));
-let studentName = (LS.get("gorae_mock_name")||"").trim();
+// 고래고등영어 앱에서 로그인한 이름을 링크로 받으면(예: ?name=홍길동 또는 #lab=토큰) 이름 입력을 건너뛴다.
+// 이 페이지는 앱과 다른 사이트라 로그인 정보를 직접 읽을 수 없어서, 앱이 링크에 이름을 실어 보내야 한다.
+function nameFromLink(){
+  try{
+    const u = new URL(location.href);
+    let n = u.searchParams.get("name") || u.searchParams.get("student") || "";
+    if(!n){
+      const tok = new URLSearchParams(location.hash.replace(/^#/,"")).get("lab");
+      if(tok){
+        const b64 = tok.split(".")[0].replace(/-/g,"+").replace(/_/g,"/");
+        const bin = atob(b64 + "=".repeat((4 - b64.length % 4) % 4));
+        const bytes = Uint8Array.from(bin, c=>c.charCodeAt(0));
+        n = (JSON.parse(new TextDecoder().decode(bytes)).name) || "";
+      }
+    }
+    n = String(n).trim();
+    if(n){ // 주소창에 이름이 남지 않게 지운다
+      u.searchParams.delete("name"); u.searchParams.delete("student"); u.hash = "";
+      history.replaceState(null, "", u.pathname + (u.search||""));
+    }
+    return n.length >= 1 && n.length <= 20 ? n : "";
+  }catch(e){ return ""; }
+}
+let studentName = nameFromLink() || (LS.get("gorae_mock_name")||"").trim();
+if(studentName) LS.set("gorae_mock_name", studentName);
 let outbox = []; try{ outbox = JSON.parse(LS.get("gorae_mock_outbox_v1")||"[]"); }catch(e){}
 let flushing = false;
 function saveOutbox(){ LS.set("gorae_mock_outbox_v1", JSON.stringify(outbox.slice(-500))); }

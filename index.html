@@ -6511,8 +6511,19 @@ function nameFromLink(){
     return n.length >= 1 && n.length <= 20 ? n : "";
   }catch(e){ return ""; }
 }
-let studentName = nameFromLink() || (LS.get("gorae_mock_name")||"").trim();
+const linkName = nameFromLink();
+let studentName = linkName || (LS.get("gorae_mock_name")||"").trim();
 if(studentName) LS.set("gorae_mock_name", studentName);
+// ── 앱에서 들어온 경우만 열기 ──
+// 허용: ① 링크에 이름이 실려 옴 ② 고래고등영어 앱 주소에서 이동해 옴(Referer) ③ 이미 이 탭에서 허용된 뒤 새로고침.
+// 주소를 직접 열면(즐겨찾기·메신저로 받은 링크 등) 안내 화면만 보인다.
+const APP_ORIGIN = "https://gorae-learning-app-builder.ezzang.chatgpt.site";
+function entryAllowed(){
+  const ss = { get(){ try{ return sessionStorage.getItem("gorae_mock_entry"); }catch(e){ return null; } }, set(){ try{ sessionStorage.setItem("gorae_mock_entry","1"); }catch(e){} } };
+  if(linkName || (document.referrer||"").indexOf(APP_ORIGIN)===0){ ss.set(); return true; }
+  return ss.get()==="1";
+}
+const ENTRY_OK = entryAllowed();
 let outbox = []; try{ outbox = JSON.parse(LS.get("gorae_mock_outbox_v1")||"[]"); }catch(e){}
 let flushing = false;
 function saveOutbox(){ LS.set("gorae_mock_outbox_v1", JSON.stringify(outbox.slice(-500))); }
@@ -6842,7 +6853,12 @@ function renderDetail(){
    <section class="panel" role="tabpanel">${body}</section>`;
 }
 
-function render(){ if(state.open && !studentName) return renderNameGate(); state.open ? renderDetail() : renderList(); }
+function renderBlocked(){
+  app.innerHTML = '<div class="empty" style="text-align:center"><p style="font-weight:700;font-size:18px;margin:0 0 6px">고래고등영어 앱에서 들어와 주세요</p>'
+    + '<p style="margin:0 0 16px;color:var(--ink-soft)">이 페이지는 앱에 로그인한 뒤 모의고사 자료실에서 눌러야 열려요.</p>'
+    + '<a class="btn" href="' + HOME_URL + '" style="text-decoration:none;display:inline-block">고래고등영어 홈으로 가기</a></div>';
+}
+function render(){ if(!ENTRY_OK) return renderBlocked(); if(state.open && !studentName) return renderNameGate(); state.open ? renderDetail() : renderList(); }
 
 function clearAuto(){
   if(state.autoT){ clearTimeout(state.autoT); state.autoT=null; }

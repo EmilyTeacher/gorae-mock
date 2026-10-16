@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light only">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>자이스토리 M 빈칸 | 고래영어 모의고사 준비</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F2740; --ink-soft:#4A5E73; --line:#D6E2EC;
+  --bg:#F3F7FA; --paper:#FFFFFF; --sea:#2C6BA8; --sea-wash:#E4EEF7;
+  --mark:#FFE27A; --mark-ink:#5A4300; --ok:#1E7D5A;
+  --r-s:#2C6BA8; --r-v:#C2410C; --r-o:#1E7D5A; --r-mod:#C9D5E0;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html,body{background:#F3F7FA !important;color:#0F2740}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 64px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--sea);outline-offset:2px;border-radius:4px}
+
+.crumb{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:13px;color:var(--ink-soft);margin:0 0 18px;padding:0;list-style:none}
+.crumb li+li::before{content:"›";margin-right:6px;color:var(--line)}
+.crumb li:last-child{color:var(--ink);font-weight:600}
+
+.hero h1{font-size:28px;line-height:1.25;margin:0 0 6px;font-weight:700;letter-spacing:-0.01em}
+.hero p{margin:0;color:var(--ink-soft);font-size:15px}
+.blank-demo{display:inline-block;width:72px;height:.9em;background:var(--mark);vertical-align:-2px;border-radius:2px;margin:0 2px}
+
+.chips{display:flex;gap:8px;overflow-x:auto;padding:18px 0 4px;margin:0 -18px;padding-left:18px;padding-right:18px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 14px;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.list{list-style:none;margin:14px 0 0;padding:0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:14px 2px}
+.row:hover .row-title{color:var(--sea)}
+.row-no{font-family:var(--serif);font-weight:600;font-size:22px;color:var(--sea)}
+.row-title{font-weight:600;font-size:16px;line-height:1.4}
+.row-meta{font-size:13px;color:var(--ink-soft)}
+.row-state{font-size:12px;color:var(--ink-soft);white-space:nowrap}
+.row-state.ready{color:var(--ok);font-weight:600}
+
+/* detail */
+.back{background:none;border:0;padding:6px 0;color:var(--sea);font-size:15px;margin-bottom:8px}
+.d-head{display:flex;align-items:flex-end;gap:14px;margin-bottom:6px}
+.d-no{font-family:var(--serif);font-size:56px;line-height:.9;font-weight:600;color:var(--sea)}
+.d-title{font-size:21px;font-weight:700;line-height:1.35;margin:0}
+.d-meta{font-size:13px;color:var(--ink-soft);margin:6px 0 0}
+
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:2px;background:var(--bg);margin:20px -18px 0;padding:8px 18px 0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;background:none;border:0;border-bottom:3px solid transparent;padding:10px 12px;font-size:15px;color:var(--ink-soft)}
+.tab[aria-selected="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--sea)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+
+.panel{padding-top:22px}
+.panel h3{font-size:17px;margin:26px 0 10px}
+.panel h3:first-child{margin-top:0}
+.bg-list{margin:0;padding-left:1.1em}
+.bg-list li{margin-bottom:10px}
+
+.tools{display:flex;justify-content:flex-end;margin-bottom:8px}
+.toggle{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:6px 12px;font-size:13px}
+.vocab{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.vocab li{padding:12px 0;border-bottom:1px solid var(--line)}
+.v-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.v-word{font-family:var(--serif);font-weight:600;font-size:18px;line-height:1.35}
+.v-type{font-size:12px;font-weight:600;border-radius:4px;padding:1px 7px;background:var(--sea-wash);color:var(--sea)}
+.v-type.ph{background:var(--mark);color:var(--mark-ink)}
+.v-mean{display:block;font-weight:600;margin-top:4px}
+.v-easy{display:block;font-size:14px;color:var(--ink-soft)}
+.v-more{display:block;font-size:13px;color:var(--sea)}
+.hide-mean .v-mean,.hide-mean .v-easy,.hide-mean .v-more{filter:blur(6px);user-select:none}
+.hide-mean li:active .v-mean,.hide-mean li:active .v-easy{filter:none}
+.spk{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--paper);color:var(--sea);padding:0;margin-left:auto}
+.spk svg{width:18px;height:18px;pointer-events:none}
+.spk.on{background:var(--sea);color:var(--paper);border-color:var(--sea)}
+.s-full .spk{margin:0 0 0 8px;vertical-align:-10px;width:30px;height:30px}
+.v-filter{display:flex;gap:6px}
+.sent{list-style:none;margin:0;padding:0}
+.sent>li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 16px;margin-bottom:18px}
+.s-full{font-family:var(--serif);font-size:17px;line-height:1.7;margin:0 0 14px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
+.s-num{display:inline-block;font-family:var(--sans);font-size:13px;font-weight:700;color:var(--paper);background:var(--sea);border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px;margin-right:8px;vertical-align:2px}
+.chunks{list-style:none;margin:0;padding:0}
+.chunks li{display:grid;grid-template-columns:1fr;gap:2px;padding:9px 0 9px 12px;border-left:4px solid var(--r-mod);margin-bottom:6px}
+.chunks li[data-r="s"]{border-left-color:var(--r-s)}
+.chunks li[data-r="v"]{border-left-color:var(--r-v)}
+.chunks li[data-r="o"]{border-left-color:var(--r-o)}
+.chunks li[data-r="c"]{border-left-color:var(--mark)}
+.c-en{font-family:var(--serif);font-size:18px;line-height:1.45}
+.c-kr{font-size:15px;color:var(--ink-soft)}
+.c-role{font-size:12px;font-weight:700;margin-right:6px}
+.chunks li[data-r="s"] .c-role{color:var(--r-s)}
+.chunks li[data-r="v"] .c-role{color:var(--r-v)}
+.chunks li[data-r="o"] .c-role{color:var(--r-o)}
+.chunks li[data-r="m"] .c-role{color:var(--ink-soft)}
+.chunks li[data-r="c"] .c-role{color:var(--mark-ink);background:var(--mark);padding:0 5px;border-radius:3px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink-soft);margin:0 0 16px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px;background:var(--c)}
+.point{background:var(--sea-wash);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:15px}
+.point b{display:block;font-size:13px;color:var(--sea);margin-bottom:2px}
+.natural{margin-top:12px;font-size:15px}
+.natural b{font-size:13px;color:var(--ink-soft);margin-right:6px}
+.blank{display:inline-block;min-width:80px;background:var(--mark);height:1em;vertical-align:-2px;border-radius:2px}
+
+.flow{list-style:none;margin:0;padding:0}
+.flow>li{position:relative;padding:0 0 22px 28px}
+.flow>li::before{content:"";position:absolute;left:5px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--sea)}
+.flow>li::after{content:"";position:absolute;left:10px;top:22px;bottom:2px;width:1px;background:var(--line)}
+.flow>li:last-child::after{display:none}
+.flow>li.key::before{background:var(--mark);box-shadow:0 0 0 2px var(--mark-ink)}
+.f-label{display:inline-block;font-size:13px;font-weight:700;color:var(--sea);margin-bottom:4px}
+.flow>li.key .f-label{color:var(--mark-ink);background:var(--mark);padding:0 6px;border-radius:3px}
+.f-en{font-family:var(--serif);font-size:17px;line-height:1.65}
+.f-en mark{background:none;color:inherit;border-bottom:3px solid var(--mark);font-weight:600}
+.f-why{font-size:14px;color:var(--ink-soft);margin-top:4px}
+.f-kr{font-size:15px;line-height:1.6;margin-top:6px;color:var(--ink)}
+.f-why{border-top:1px dashed var(--line);padding-top:4px}
+.tip{background:var(--sea-wash);border-radius:10px;padding:14px 16px;font-size:15px;margin-top:6px}
+.answer-btn{width:100%;border:2px dashed var(--line);background:var(--paper);border-radius:10px;padding:16px;font-size:16px;font-weight:600;margin-top:18px}
+.answer{background:var(--paper);border:2px solid var(--ok);border-radius:10px;padding:16px;margin-top:18px}
+.answer b{color:var(--ok)}
+.answer .a-en{font-family:var(--serif);font-size:17px;margin:4px 0}
+.next{display:block;width:100%;margin-top:14px;border:0;background:var(--ink);color:var(--paper);border-radius:10px;padding:14px;font-size:15px;font-weight:600}
+
+@media (max-width:520px){
+  .wrap{padding:16px 14px 56px}
+  .tabs{margin:20px -14px 0;padding:6px 14px 0}
+  .tab{padding:10px 10px;font-size:14.5px}
+  .sent>li{padding:14px 12px;border-radius:10px}
+  .s-full{font-size:16px;line-height:1.65}
+  .chunks li{padding:7px 0 7px 10px;margin-bottom:4px;border-left-width:3px}
+  .c-role{display:block;font-size:11.5px;margin:0 0 1px}
+  .c-en{font-size:16.5px;line-height:1.4}
+  .c-kr{font-size:14px}
+  .point,.natural{font-size:14.5px}
+  .legend{font-size:12px;gap:4px 10px}
+  .f-en{font-size:16px}
+  .d-no{font-size:46px}
+}
+.howto{margin-top:18px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:0 16px}
+.howto summary{cursor:pointer;padding:14px 0;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.howto summary::-webkit-details-marker{display:none}
+.howto summary::after{content:"+";font-size:20px;color:var(--sea);font-weight:400}
+.howto[open] summary::after{content:"–"}
+.howto ol{margin:0;padding:0 0 16px 1.2em}
+.howto li{margin-bottom:8px;font-size:15px}
+.howto li b{color:var(--sea)}
+.core{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper);margin-bottom:8px}
+.core div{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);font-size:15px}
+.core div:last-child{border-bottom:0}
+.core dt{font-weight:700;color:var(--sea);margin:0}
+.core dd{margin:0}
+.core .en{font-family:var(--serif);font-size:16px;display:block}
+.core .gist{background:var(--sea-wash)}
+.q-stem{font-weight:600;margin:0 0 10px}
+.q-line{font-family:var(--serif);font-size:17px;line-height:1.7;background:var(--paper);border-radius:10px;padding:14px;border:1px solid var(--line);margin:0 0 6px}
+.q-note{font-size:13px;color:var(--ink-soft);margin:0 0 14px}
+.choices{list-style:none;margin:0;padding:0}
+.choice{display:flex;gap:10px;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:13px 14px;margin-bottom:8px;font-family:var(--serif);font-size:16.5px;line-height:1.45}
+.choice .n{font-family:var(--sans);font-weight:700;color:var(--sea);flex:none}
+.choice.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,var(--paper))}
+.choice.wrong{border-color:var(--r-v);background:color-mix(in srgb,var(--r-v) 8%,var(--paper))}
+.choice:disabled{cursor:default;color:var(--ink)}
+.feedback{border-radius:10px;padding:14px 16px;margin-top:6px;font-size:15px}
+.feedback.ok{background:color-mix(in srgb,var(--ok) 12%,var(--paper))}
+.feedback.no{background:color-mix(in srgb,var(--r-v) 10%,var(--paper))}
+.feedback b{display:block;margin-bottom:4px}
+.row-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:600;background:var(--ink);color:var(--paper)}
+.btn.ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.wrong-list{list-style:none;margin:0;padding:0}
+.wrong-list li{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px;font-size:15px}
+.wrong-list .w-head{font-weight:700;margin-bottom:2px}
+.wrong-list .w-head span{color:var(--r-v);margin-right:6px}
+.quiz{list-style:none;margin:0;padding:0}
+.quiz>li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.quiz .qq{font-weight:600;margin:0 0 10px}
+.quiz .opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.quiz .opt{border:1.5px solid var(--line);background:var(--bg);border-radius:8px;padding:10px;font-size:14.5px;text-align:left}
+.quiz .opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--paper));font-weight:600}
+.quiz .opt.wrong{border-color:var(--r-v);text-decoration:line-through}
+.score{text-align:center;background:var(--paper);border:2px solid var(--sea);border-radius:12px;padding:18px;margin-top:8px}
+.score strong{display:block;font-size:30px;color:var(--sea);font-family:var(--serif)}
+.q-secs{display:flex;gap:6px;overflow-x:auto;margin:0 -18px 14px;padding:0 18px;scrollbar-width:none}
+.q-secs::-webkit-scrollbar{display:none}
+.q-cnt{font-size:12px;opacity:.75;margin-left:2px}
+.g-q{font-family:var(--serif);font-size:16.5px;font-weight:400;line-height:1.6}
+.g-opt{font-family:var(--serif);font-size:16px;text-align:center}
+.opts.tf{grid-template-columns:1fr 1fr}
+.opt.ox{font-size:22px;font-weight:700;text-align:center;padding:8px}
+.opt.ox.wrong{text-decoration:none;opacity:.6}
+.why{font-size:14px;color:var(--ink-soft);margin:10px 0 0;padding-top:8px;border-top:1px dashed var(--line)}
+.why b{color:var(--ok)}
+.w-slot{min-height:52px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:2px dashed var(--line);border-radius:10px;padding:8px;margin-bottom:10px;background:var(--bg)}
+.w-slot.ok{border-style:solid;border-color:var(--ok)}
+.w-slot.no{border-style:solid;border-color:var(--r-v)}
+.w-ph{font-size:13px;color:var(--ink-soft);padding-left:4px}
+.w-bank{display:flex;flex-wrap:wrap;gap:6px}
+.w-chip{font-family:var(--serif);font-size:16px;line-height:1.3;border:1.5px solid var(--sea);color:var(--ink);background:var(--paper);border-radius:8px;padding:8px 11px;text-align:left}
+.w-chip.in{background:var(--sea-wash)}
+.w-chip:disabled{cursor:default}
+.btn:disabled{opacity:.4;cursor:default}
+@media (max-width:520px){.quiz .opts{grid-template-columns:1fr}.opts.tf{grid-template-columns:1fr 1fr}.q-secs{margin:0 -14px 14px;padding:0 14px}}
+.qz-top{display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--sea);margin-top:4px}
+.qz-bar{height:6px;background:var(--line);border-radius:3px;margin:8px 0 14px;overflow:hidden}
+.qz-bar i{display:block;height:100%;background:var(--sea);border-radius:3px;transition:width .2s}
+.qz-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 16px;box-shadow:0 2px 10px rgba(15,39,64,.06)}
+.qz-hint{font-size:13.5px;color:var(--ink-soft);margin:0 0 10px}
+.qz-q{font-size:18px;font-weight:700;line-height:1.5;margin:0 0 16px}
+.qz-opts{display:grid;gap:10px}
+.qz-opts.two{grid-template-columns:1fr 1fr}
+.qz-opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font-size:16.5px;line-height:1.4;background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:14px;color:var(--ink);min-height:54px}
+.qz-opt:not(:disabled):hover{border-color:var(--sea)}
+.qz-n{flex:none;font-weight:700;color:var(--sea);font-size:18px}
+.qz-opt.big{justify-content:center;font-family:var(--serif);font-size:20px;font-weight:600}
+.qz-opt.ox{justify-content:center;font-size:30px;font-weight:700;padding:10px}
+.qz-opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--paper))}
+.qz-opt.right::after{content:"✓";margin-left:auto;color:var(--ok);font-weight:700;font-size:20px}
+.qz-opt.big.right::after,.qz-opt.ox.right::after{margin-left:8px}
+.qz-opt.wrong{border-color:var(--r-v);background:color-mix(in srgb,var(--r-v) 12%,var(--paper))}
+.qz-opt.wrong::after{content:"✕";margin-left:auto;color:var(--r-v);font-weight:700;font-size:18px}
+.qz-opt.big.wrong::after,.qz-opt.ox.wrong::after{margin-left:8px}
+.qz-opt.dim{opacity:.45}
+.qz-opt:disabled{cursor:default}
+.g-sent{font-family:var(--serif);font-size:20px;line-height:2;margin:0 0 18px}
+.gbox{display:inline-flex;align-items:center;gap:8px;border:2.5px solid var(--ink);border-radius:8px;padding:0 10px;background:var(--mark);color:var(--mark-ink);font-family:var(--sans);font-weight:700;font-size:17px;line-height:1.8;white-space:nowrap}
+.gbox i{font-style:normal;opacity:.5}
+.gbox.filled.ok{background:color-mix(in srgb,var(--ok) 18%,var(--paper));border-color:var(--ok);color:var(--ink)}
+.gbox.filled.no{background:color-mix(in srgb,var(--ok) 18%,var(--paper));border-color:var(--ok);color:var(--ink)}
+.fb{border-radius:14px;padding:16px;margin-top:12px;font-size:15.5px;line-height:1.6;border:2px solid}
+.fb p{margin:0 0 8px}.fb p:last-child{margin-bottom:0}
+.fb.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 9%,var(--paper))}
+.fb.no{border-color:var(--r-v);background:color-mix(in srgb,var(--r-v) 7%,var(--paper))}
+.fb-t{font-size:17px;font-weight:700}
+.fb.ok .fb-t{color:var(--ok)}.fb.ok .fb-t::before{content:"✓ "}
+.fb.no .fb-t{color:var(--r-v)}.fb.no .fb-t::before{content:"✕ "}
+.fb b{color:var(--ink)}
+.fb-en{font-family:var(--serif);font-size:16.5px;background:var(--paper);border-left:4px solid var(--mark);padding:8px 10px;border-radius:0 6px 6px 0}
+.qz-nav{display:flex;justify-content:space-between;gap:10px;margin-top:16px}
+.qz-nav .btn{flex:1;padding:14px}
+.w-chip.pos-ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--paper))}
+.w-chip.pos-no{border-color:var(--r-v);background:color-mix(in srgb,var(--r-v) 12%,var(--paper))}
+.w-hint{background:var(--sea-wash);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:14.5px}
+.w-hint b{color:var(--sea)}
+.w-ans{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.w-a{display:inline-flex;flex-direction:column;background:var(--paper);border:1.5px solid var(--sea);border-radius:8px;padding:6px 10px;font-family:var(--serif);font-size:16px}
+.w-r{font-family:var(--sans);font-size:11.5px;font-weight:700;color:var(--sea)}
+.sc-rows{display:grid;gap:6px;margin:12px auto;max-width:260px;text-align:left}
+.sc-rows div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:4px 0}
+.score p{margin:8px 0 0}
+@media (max-width:520px){.qz-card{padding:16px 13px}.qz-q{font-size:17px}.g-sent{font-size:18px}.qz-opt{font-size:15.5px}}
+.empty{padding:40px 0;color:var(--ink-soft)}
+.foot{margin-top:40px;font-size:12px;color:var(--ink-soft)}
+@media (prefers-reduced-motion:no-preference){.panel{animation:in .18s ease-out}@keyframes in{from{opacity:0}to{opacity:1}}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+const TOPICS = ["전체","환경·에너지","생명과학·뇌과학","심리·언어","사회·소통","인문·예술"];
+
+const PASSAGES = [
+ {no:"M25",topic:"인문·예술",title:"플라톤이 말한 진짜 아름다움",src:"고1 2025년 3월 31번"},
+ {no:"M26",topic:"환경·에너지",title:"재생에너지도 화석연료로 만든다",src:"고1 2025년 9월 34번",
+  bg:[
+   "지구 온난화를 막으려면 석탄·석유 대신 태양광·풍력 같은 재생에너지로 바꿔야 해요.",
+   "그런데 태양광 패널, 풍력 터빈, 발전소를 '만드는 과정'에는 엄청난 에너지가 들어요.",
+   "콘크리트와 철강을 만들고, 패널에 들어갈 광물을 땅에서 캐는 일은 지금 기술로는 화석연료로만 할 수 있어요.",
+   "그래서 재생에너지로 빨리 바꾸려 할수록, 오히려 화석연료를 더 빨리 써야 하는 모순이 생겨요."
+  ],
+  vocab:[
+   ["be involved in","동사구","~에 참여하다, 관여하다","어떤 일 안에 들어가 함께하다","involvement 관여"],
+   ["renewable energy infrastructure","명사구","재생에너지 기반 시설","태양광·풍력처럼 계속 다시 쓸 수 있는 에너지를 만드는 시설","renewable 재생 가능한 / infrastructure 기반 시설"],
+   ["in addition to","전치사구","~뿐만 아니라, ~에 더해","앞에 말한 것 말고도 더 있다","= besides"],
+   ["alternative","형용사","대안의, 대체의","기존 것을 대신할 다른 방법의","n. 대안"],
+   ["farming procedures","명사구","농업 방식","농사를 짓는 정해진 순서와 방법","procedure 절차 / proceed 나아가다"],
+   ["transformation","명사","변화, 전환","모양이나 성질이 완전히 바뀌는 것","transform 변화시키다"],
+   ["cannot happen without","동사구","~없이는 일어날 수 없다","그것이 꼭 있어야만 가능하다","이중부정 = 반드시 필요하다"],
+   ["steel elements","명사구","철강 부품","철로 만든 구조물의 조각들","element 요소, 부품 = component"],
+   ["only possible to produce with","형용사구","~로만 생산할 수 있는","그 방법 말고는 만들 방법이 없는","only possible ~ = ~해야만 가능한"],
+   ["scarce","형용사","부족한, 희소한","양이 적어서 구하기 어려운","scarcity 부족 ↔ abundant 풍부한"],
+   ["must be excavated","동사구","캐내야만 한다","땅을 파서 꺼내야 한다 (수동태)","excavate 발굴하다 = dig"],
+   ["push towards","동사구","~쪽으로 밀고 나아가다","목표를 향해 힘껏 나아가다","towards = toward ~을 향해"],
+   ["an undermining factor","명사구","약화시키는 요인","무언가를 밑에서부터 무너뜨리는 원인","undermine 약화시키다 = weaken"],
+   ["cut global emissions","동사구","전 세계 배출량을 줄이다","온실가스를 내보내는 양을 줄이다","emission 배출 / emit 내뿜다"],
+   ["remark","동사","언급하다, 말하다","생각을 짧게 말하다","n. 발언"],
+   ["be seldom counted in","동사구","~에서 거의 계산되지 않다","거의 포함해서 따지지 않는다","seldom = rarely, hardly (부정어)"],
+   ["transition proposals","명사구","전환 계획안","다른 상태로 바꾸자는 제안서","transition 전환 / proposal 제안"],
+   ["tend to focus just on","동사구","~에만 초점을 맞추는 경향이 있다","보통 그것만 중요하게 보는 편이다","tend to V ~하는 경향이 있다 / just = only"],
+   ["energy supply requirements","명사구","에너지 공급 필요량","에너지가 얼마나 필요한지에 대한 것","requirement 필요조건 / require 필요로 하다"]
+  ],
+  sentences:[
+   {full:"Richard Heinberg, an American journalist, argues that in building the renewable energy infrastructure to stop global warming, we are actually involved in one of the greatest change projects in human history.",
+    chunks:[["s","주어","Richard Heinberg,","리처드 하인버그는"],["m","동격","an American journalist,","미국 언론인인"],["v","동사","argues","주장한다"],["o","목적어","that","~라고 (that절 시작)"],["m","수식","in building the renewable energy infrastructure","재생에너지 기반 시설을 짓는 데 있어서"],["m","수식","to stop global warming,","지구 온난화를 막기 위해"],["s","that절 주어·동사","we are actually involved","우리는 사실 참여하고 있다"],["m","수식","in one of the greatest change projects","가장 큰 변화 프로젝트 중 하나에"],["m","수식","in human history.","인류 역사상"]],
+    point:"that 뒤에 수식어 두 개(in building ~, to stop ~)가 먼저 나와서 진짜 주어를 놓치기 쉬워요. 수식어를 괄호로 묶고 we are involved부터 찾으세요.",
+    kr:"미국 언론인 리처드 하인버그는, 지구 온난화를 막기 위해 재생에너지 기반 시설을 짓는 데 있어서 우리가 사실 인류 역사상 가장 큰 변화 프로젝트 중 하나에 참여하고 있다고 주장한다."},
+   {full:"Production of solar panels requires scarce and expensive minerals which must be excavated, again requiring the use of fossil fuels.",
+    chunks:[["s","주어","Production of solar panels","태양광 패널 생산은"],["v","동사","requires","필요로 한다"],["o","목적어","scarce and expensive minerals","희소하고 비싼 광물을"],["m","수식","which must be excavated,","캐내야만 하는"],["m","분사구문","again requiring the use of fossil fuels.","그리고 이것이 또다시 화석 연료 사용을 필요로 한다"]],
+    point:"which는 바로 앞 minerals를 꾸며요. 콤마 뒤 again requiring은 '그리고 그것이 또 ~을 필요로 한다'처럼 결과를 덧붙이는 분사구문이에요.",
+    kr:"태양광 패널 생산에는 캐내야 하는 희소하고 비싼 광물이 필요한데, 이것이 또다시 화석 연료 사용을 필요로 한다."},
+   {full:"Thus, the harder we push towards a renewable energy system, the faster <span class='blank'></span>.",
+    chunks:[["m","연결어","Thus,","따라서"],["c","the 비교급 ①","the harder we push","우리가 더 강하게 나아갈수록"],["m","수식","towards a renewable energy system,","재생에너지 체계 쪽으로"],["c","the 비교급 ②","the faster ______.","더 빨리 ______ 하다"]],
+    point:"the 비교급 + 주어 + 동사, the 비교급 + 주어 + 동사 = '~할수록 더 …하다'. 앞이 커지면 뒤도 커지는 관계라서, 빈칸에는 재생에너지로 갈수록 함께 늘어나는 것이 들어가요.",
+    kr:"따라서 우리가 재생에너지 체계 쪽으로 더 강하게 나아갈수록, 더 빨리 (건설 과정에 화석 에너지를 써야 한다)."},
+   {full:"Heinberg remarks that the cost of building this new energy infrastructure is seldom counted in transition proposals, which tend to focus just on energy supply requirements.",
+    chunks:[["s","주어","Heinberg","하인버그는"],["v","동사","remarks","말한다"],["o","목적어","that","~라고 (that절 시작)"],["s","that절 주어","the cost of building this new energy infrastructure","이 새로운 에너지 기반 시설을 짓는 비용이"],["v","that절 동사","is seldom counted","거의 계산되지 않는다"],["m","수식","in transition proposals,","전환 계획안에서"],["m","계속적 용법","which tend to focus just on energy supply requirements.","그런데 그 계획안들은 에너지 공급 필요량에만 초점을 맞추는 경향이 있다"]],
+    point:"that절의 주어가 길어요. 동사 is counted를 찾으면 문장이 끊어져요. seldom은 '거의 ~않다'라는 부정어이고, , which는 앞의 transition proposals를 이어서 설명해요.",
+    kr:"하인버그는 이 새로운 에너지 기반 시설을 짓는 비용이 전환 계획안에서 거의 계산되지 않는다고 말하는데, 그 계획안들은 에너지 공급 필요량에만 초점을 맞추는 경향이 있다."}
+  ],
+  flow:[
+   {label:"핵심 주장",en:"This transformation cannot happen without <mark>fossil fuels</mark>.",why:"cannot ~ without = 반드시 필요하다",kr:"이 변화는 화석 연료 없이는 일어날 수 없다."},
+   {label:"근거 ① 콘크리트·철강",en:"For instance, production of concrete structures and steel elements require amounts of energy that is only possible to produce with <mark>fossil energy</mark>.",why:"For instance = 예시 시작",kr:"예를 들어, 콘크리트 구조물과 철강 부품을 생산하려면 화석 에너지로만 만들어 낼 수 있는 양의 에너지가 필요하다."},
+   {label:"근거 ② 태양광 패널",en:"Production of solar panels requires scarce and expensive minerals which must be excavated, again requiring the use of <mark>fossil fuels</mark>.",why:"again = 또다시 화석 연료",kr:"태양광 패널 생산에는 캐내야 하는 희소하고 비싼 광물이 필요한데, 이것이 또다시 화석 연료 사용을 필요로 한다."},
+   {label:"빈칸 문장",key:true,en:"<mark>Thus</mark>, the harder we push towards a renewable energy system, the faster <span class='blank'></span>.",why:"Thus = 앞 근거들의 결론",kr:"따라서 우리가 재생에너지 체계 쪽으로 더 강하게 나아갈수록, 더 빨리 (건설 과정에 화석 에너지를 써야 한다)."},
+   {label:"빈칸 뒤 확인",en:"This is not only <mark>expensive</mark>, but also an undermining factor for our efforts to cut global <mark>emissions</mark>.",why:"This = 빈칸 내용. 비싸고 배출을 늘리는 것 = 화석 연료 사용",kr:"이것은 비용이 많이 들 뿐 아니라, 전 세계 배출량을 줄이려는 우리의 노력을 약화시키는 요인이기도 하다."}
+  ],
+  tip:"Thus 앞의 근거 문장들에 fossil이 세 번 반복돼요. 반복되는 말이 곧 빈칸의 답이에요. 빈칸 뒤 This is expensive / undermining emissions도 '화석 연료를 쓴다'와 딱 맞아요.",
+  core:{
+   material:"재생에너지 기반 시설 건설",
+   topic:"재생에너지 기반 시설을 짓는 데 필요한 화석 연료",
+   themeEn:"the hidden dependence of the renewable energy transition on fossil fuels",
+   themeKr:"재생에너지 전환이 사실은 화석 연료에 의존한다는 점",
+   gist:"재생에너지 시설을 짓는 데에도 화석 연료가 꼭 필요하므로, 재생에너지 전환을 서두를수록 화석 연료를 더 빨리 쓰게 된다는 문제를 계산에 넣어야 한다."
+  },
+  question:{
+   stem:"다음 빈칸에 들어갈 말로 가장 적절한 것은? [3점]",
+   line:"Thus, the harder we push towards a renewable energy system, the faster <span class='blank'></span>.",
+   choices:["we are taking full advantage of renewable energy sources","we have to use fossil energy for the construction process","we invest in more natural resources for the environment","we are able to decrease the rate of global warming","alternative energy markets become competitive"],
+   correct:1
+  },
+  wrong:[
+   ["①","재생에너지를 최대한 활용하고 있다","글은 재생에너지를 '쓰는' 이야기가 아니라 '만드는 과정'에 화석 연료가 든다는 이야기예요. 긍정적인 결과라서 빈칸 뒤 expensive, undermining과도 맞지 않아요."],
+   ["③","환경을 위해 더 많은 천연자원에 투자한다","지문의 minerals(광물), environment 같은 단어를 섞은 함정이에요. 글의 핵심은 '투자'가 아니라 '화석 연료 사용'이에요."],
+   ["④","지구 온난화의 속도를 줄일 수 있다","정반대 오답이에요. 빈칸 뒤에서 이것이 배출량 감축을 '약화시키는 요인'이라고 했으니, 온난화를 줄인다는 말은 틀려요."],
+   ["⑤","대체 에너지 시장이 경쟁력을 갖게 된다","시장과 경쟁은 지문에 전혀 나오지 않는 내용이에요. 그럴듯하지만 근거가 없는 오답이에요."]
+  ],
+  quiz:{
+   vocab:[
+    {q:"undermine의 뜻으로 알맞은 것은?",o:["약화시키다","강화하다","캐내다","언급하다"],a:0,
+     why:"undermine은 밑(under)에서 파내듯(mine) 조금씩 무너뜨린다는 뜻이에요.",
+     e:["","'강화하다'는 strengthen이에요. undermine과 정반대예요.","'캐내다'는 excavate예요. 지문에 같이 나와서 헷갈리기 쉬워요.","'언급하다'는 remark예요."]},
+    {q:"is seldom counted in transition proposals의 뜻은?",o:["전환 계획안에서 자주 계산된다","전환 계획안에서 거의 계산되지 않는다","전환 계획안에서 정확히 계산된다","전환 계획안에서 계산할 수 없다"],a:1,
+     why:"seldom은 '거의 ~않다'라는 부정어예요. rarely, hardly와 같은 뜻이에요.",
+     e:["'자주'는 often이에요. seldom은 정반대인 '거의 ~않다'예요.","","'정확히'는 exactly예요. seldom에는 그런 뜻이 없어요.","'할 수 없다'는 cannot이에요. seldom은 가능성이 아니라 얼마나 자주인지를 말해요."]},
+    {q:"scarce(부족한, 희소한)와 뜻이 반대인 단어는?",o:["rare","expensive","abundant","renewable"],a:2,
+     why:"abundant는 '풍부한'이에요. 양이 적은 scarce와 반대예요.",
+     e:["rare(드문)는 scarce와 비슷한 말이에요.","expensive(비싼)는 반대말이 아니에요. 지문에 scarce and expensive로 함께 나왔을 뿐이에요.","","renewable(재생 가능한)은 양이 많고 적음과 관계없어요."]},
+    {q:"an undermining factor의 뜻은?",o:["약화시키는 요인","숨겨진 비용","중요한 장점","새로운 기술"],a:0,
+     why:"undermining은 '약화시키는', factor는 '요인'이에요.",
+     e:["","'비용'은 cost예요. factor는 '요인'이에요.","'장점'은 advantage예요. undermining은 부정적인 뜻이에요.","'기술'은 technology예요."]},
+    {q:"tend to focus just on ~ 의 뜻은?",o:["~에 집중하기 어렵다","~에만 초점을 맞추는 경향이 있다","~에 관심이 없다","~에 초점을 맞추려고 노력한다"],a:1,
+     why:"tend to V는 '~하는 경향이 있다', just는 only(~만)예요.",
+     e:["'어렵다'는 뜻은 없어요. tend to는 '~하는 경향이 있다'예요.","","정반대예요. focus on은 '~에 집중하다'예요.","'노력하다'는 try to예요. tend to와 헷갈리지 마세요."]},
+    {q:"be involved in의 뜻으로 알맞은 것은?",o:["~에 참여하다","~을 피하다","~에 반대하다","~을 끝내다"],a:0,
+     why:"be involved in은 어떤 일 안에 들어가 함께한다는 뜻이에요. 명사형은 involvement(관여)예요.",
+     e:["","'피하다'는 avoid예요.","'반대하다'는 oppose예요.","'끝내다'는 finish예요."]},
+    {q:"in addition to solar panels의 뜻은?",o:["태양광 패널 대신에","태양광 패널뿐만 아니라","태양광 패널 때문에","태양광 패널에도 불구하고"],a:1,
+     why:"in addition to는 '~에 더해, ~뿐만 아니라'예요. besides와 같은 뜻이에요.",
+     e:["'~대신에'는 instead of예요.","","'~때문에'는 because of예요.","'~에도 불구하고'는 despite예요."]},
+    {q:"cannot happen without fossil fuels의 뜻은?",o:["화석 연료 없이도 일어날 수 있다","화석 연료 없이는 일어날 수 없다","화석 연료 때문에 일어나지 않는다","화석 연료와 함께 일어나면 안 된다"],a:1,
+     why:"cannot ~ without …은 '…없이는 ~할 수 없다', 즉 그것이 반드시 필요하다는 뜻이에요.",
+     e:["정반대예요. cannot이 있으니 '없이도 가능하다'가 될 수 없어요.","","without은 '~때문에'가 아니라 '~없이'예요.","'~하면 안 된다'는 must not이에요."]},
+    {q:"excavate와 뜻이 가장 가까운 단어는?",o:["dig","build","sell","protect"],a:0,
+     why:"excavate는 '땅을 파서 꺼내다'라서 dig(파다)와 가장 가까워요.",
+     e:["","build는 '짓다'예요.","sell은 '팔다'예요.","protect는 '보호하다'예요."]},
+    {q:"push towards a renewable energy system의 뜻은?",o:["재생에너지 체계를 거부하다","재생에너지 체계 쪽으로 밀고 나아가다","재생에너지 체계를 뒤로 미루다","재생에너지 체계를 조사하다"],a:1,
+     why:"push towards ~는 '~쪽으로 힘껏 밀고 나아가다'예요. towards는 방향(~을 향해)을 나타내요.",
+     e:["'거부하다'는 reject예요.","","'뒤로 미루다'는 put off예요. push와 헷갈리지 마세요.","'조사하다'는 investigate예요."]}
+   ],
+   grammar:[
+    {pre:"Production of solar panels",o:["requires","requiring"],post:"scarce and expensive minerals.",a:0,
+     why:"이 문장에는 동사가 하나도 없어요. 주어 Production(단수) 뒤에 동사 requires가 와야 해요.",
+     wrong:"requiring은 -ing 형태라 동사 역할을 못 해요. 이걸 쓰면 문장에 동사가 없어져요."},
+    {pre:"… minerals which must",o:["excavate","be excavated"],post:".",a:1,
+     why:"광물은 사람이 캐내는 대상이에요. '캐내지다'라는 수동의 뜻이라 be excavated가 맞아요.",
+     wrong:"excavate는 '캐내다'(능동)예요. 광물이 무언가를 캐내는 게 아니에요."},
+    {pre:"",o:["The harder","Harder"],post:"we push towards a renewable energy system, the faster we have to use fossil energy.",a:0,
+     why:"뒤에 the faster가 있으니 앞도 the + 비교급이에요. 'the 비교급 ~, the 비교급 …' 은 짝으로 다녀요.",
+     wrong:"the가 빠지면 '~할수록 더 …하다' 구조가 깨져요."},
+    {pre:"The cost of building this new energy infrastructure",o:["is","are"],post:"seldom counted in transition proposals.",a:0,
+     why:"주어의 핵심은 The cost(단수)예요. of building ~ infrastructure는 꾸며 주는 말이에요.",
+     wrong:"주어가 길어서 헷갈려도 핵심은 The cost 하나예요. 단수 주어에 are는 쓸 수 없어요."},
+    {pre:"… in transition proposals,",o:["which","what"],post:"tend to focus just on energy supply requirements.",a:0,
+     why:"앞에 명사 transition proposals가 있고, 콤마 뒤에서 그 명사를 이어 설명하므로 관계대명사 which예요.",
+     wrong:"what은 앞에 꾸밀 명사(선행사)가 없을 때 써요. 여기에는 proposals가 있어서 쓸 수 없어요."}
+   ],
+   tf:[
+    {s:"하인버그는 재생에너지 기반 시설 건설을 인류 역사상 가장 큰 변화 프로젝트 중 하나로 본다.",a:true,en:"we are actually involved in one of the greatest change projects in human history.",kr:"우리는 사실 인류 역사상 가장 큰 변화 프로젝트 중 하나에 참여하고 있다."},
+    {s:"재생에너지 전환을 위해서는 태양광 패널과 풍력 터빈만 만들면 된다.",a:false,en:"In addition to solar panels and wind turbines, we have to build an alternative transport infrastructure, farming procedures and industrial processes.",kr:"태양광 패널과 풍력 터빈뿐만 아니라 교통 기반 시설, 농업 방식, 산업 공정도 만들어야 한다."},
+    {s:"이 변화는 화석 연료 없이도 일어날 수 있다.",a:false,en:"This transformation cannot happen without fossil fuels.",kr:"이 변화는 화석 연료 없이는 일어날 수 없다."},
+    {s:"콘크리트와 철강은 재생에너지만으로도 생산할 수 있다.",a:false,en:"… require amounts of energy that is only possible to produce with fossil energy.",kr:"화석 에너지로만 만들어 낼 수 있는 양의 에너지가 필요하다."},
+    {s:"태양광 패널 생산에는 희소하고 비싼 광물이 필요하다.",a:true,en:"Production of solar panels requires scarce and expensive minerals …",kr:"태양광 패널 생산에는 희소하고 비싼 광물이 필요하다."},
+    {s:"패널용 광물을 캐내는 과정에도 화석 연료가 쓰인다.",a:true,en:"… which must be excavated, again requiring the use of fossil fuels.",kr:"캐내야 하는데, 이것이 또다시 화석 연료 사용을 필요로 한다."},
+    {s:"화석 연료 사용이 늘어나는 것은 배출량을 줄이려는 노력에 도움이 된다.",a:false,en:"This is not only expensive, but also an undermining factor for our efforts to cut global emissions.",kr:"이것은 비쌀 뿐 아니라 배출량을 줄이려는 노력을 약화시키는 요인이다."},
+    {s:"전환 계획안은 새 기반 시설을 짓는 비용을 꼼꼼히 계산한다.",a:false,en:"… the cost of building this new energy infrastructure is seldom counted in transition proposals …",kr:"새 에너지 기반 시설을 짓는 비용은 전환 계획안에서 거의 계산되지 않는다."},
+    {s:"전환 계획안은 주로 에너지 공급 필요량에 초점을 맞춘다.",a:true,en:"… which tend to focus just on energy supply requirements.",kr:"그 계획안들은 에너지 공급 필요량에만 초점을 맞추는 경향이 있다."}
+   ],
+   write:[
+    {kr:"이 변화는 화석 연료 없이는 일어날 수 없다.",c:["This transformation","cannot happen","without fossil fuels."],r:["주어","동사","~없이는"],
+     hint:"주어(이 변화) → 동사(일어날 수 없다) → 조건(화석 연료 없이는)",
+     point:"cannot ~ without … = …없이는 ~할 수 없다. 우리말은 '없이는'이 앞에 오지만 영어는 맨 뒤에 와요."},
+    {kr:"태양광 패널 생산은 캐내야 하는 희소하고 비싼 광물을 필요로 한다.",c:["Production of solar panels","requires","scarce and expensive minerals","which must be excavated."],r:["주어","동사","목적어","목적어 꾸밈"],
+     hint:"주어 → 동사 → 목적어 → 목적어를 꾸미는 which절",
+     point:"우리말은 '캐내야 하는 광물'처럼 꾸밈말이 앞에 오지만, 영어는 which절이 명사 뒤에서 꾸며요."},
+    {kr:"우리가 재생에너지 체계 쪽으로 더 강하게 나아갈수록, 더 빨리 화석 에너지를 써야 한다.",c:["The harder","we push","towards a renewable energy system,","the faster","we have to use fossil energy."],r:["the 비교급","주어+동사","방향","the 비교급","주어+동사"],
+     hint:"The 비교급 + 주어 + 동사 ~, the 비교급 + 주어 + 동사 …",
+     point:"'~할수록 더 …하다'는 the 비교급이 두 번, 각각 문장 맨 앞에 와요."},
+    {kr:"이 새로운 에너지 기반 시설을 짓는 비용은 전환 계획안에서 거의 계산되지 않는다.",c:["The cost","of building this new energy infrastructure","is seldom counted","in transition proposals."],r:["주어","주어 꾸밈","동사(수동)","장소"],
+     hint:"주어(The cost) 바로 뒤에 그것을 꾸미는 of 구가 붙어요.",
+     point:"주어가 길어도 핵심은 The cost(단수)라서 동사는 is예요. seldom은 be동사 뒤에 와요."}
+   ]
+  },
+  answer:{no:"②",en:"we have to use fossil energy for the construction process",kr:"우리는 건설 과정에 화석 에너지를 사용해야 한다"}
+ },
+ {no:"M27",topic:"생명과학·뇌과학",title:"넙치로 변신한 문어",src:"고1 2024년 10월 31번"},
+ {no:"M28",topic:"환경·에너지",title:"기후 위기가 현실이 되면, 기후 소설은?",src:"고1 2024년 10월 34번"},
+ {no:"M29",topic:"환경·에너지",title:"나무도 기후를 따라 이동한다",src:"고1 2024년 3월 31번"},
+ {no:"M30",topic:"사회·소통",title:"반대 의견을 환영한다는 리더들",src:"고1 2024년 3월 32번"},
+ {no:"M31",topic:"사회·소통",title:"브레인스토밍 대신 브레인라이팅",src:"고1 2024년 6월 34번"},
+ {no:"M32",topic:"사회·소통",title:"평범한 유명인, 명성의 의미를 바꾸다",src:"고1 2024년 9월 34번"},
+ {no:"M33",topic:"환경·에너지",title:"기후변화가 멀게 느껴지는 이유",src:"고1 2022년 6월 34번"},
+ {no:"M34",topic:"인문·예술",title:"창작은 타인의 시선으로 완성된다",src:"고1 2021년 6월 34번"},
+ {no:"M35",topic:"생명과학·뇌과학",title:"뇌는 도시와 같다",src:"고1 2023년 6월 32번"},
+ {no:"M36",topic:"생명과학·뇌과학",title:"스스로 빛을 내어 숨는 심해 생물",src:"고1 2021년 11월 34번"},
+ {no:"M37",topic:"심리·언어",title:"언어로 동물과 거리를 두는 인간",src:"고1 2023년 9월 32번"},
+ {no:"M38",topic:"인문·예술",title:"구체적인 묘사의 힘",src:"고1 2022년 3월 31번"},
+ {no:"M39",topic:"사회·소통",title:"변화를 미리 알려 적응하게 하라",src:"고1 2021년 11월 31번"},
+ {no:"M40",topic:"심리·언어",title:"몸이 감정을 만든다",src:"고1 2023년 6월 33번"},
+ {no:"M41",topic:"사회·소통",title:"원하는 것과 해야 하는 것",src:"고1 2021년 6월 31번"},
+ {no:"M42",topic:"사회·소통",title:"승리는 양날의 검",src:"고1 2021년 6월 32번"},
+ {no:"M43",topic:"심리·언어",title:"아기는 소리 패턴을 계산한다",src:"고1 2021년 11월 33번"}
+];
+
+const app = document.getElementById("app");
+const NUM=["①","②","③","④","⑤"];
+function freshQA(){ return {vocab:{},grammar:{},tf:{},write:{}}; }
+function freshQI(){ return {vocab:0,grammar:0,tf:0,write:0}; }
+let state = {topic:"전체", open:null, tab:"bg", hide:false, showAns:false, vf:"all", pick:null, qa:freshQA(), qsec:"vocab", qi:freshQI(), qres:false};
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+const clean = t => String(t).replace(/<[^>]+>/g," ").replace(/_+|~/g," ").replace(/\bV\b/g,"").replace(/\s+/g," ").trim();
+function spk(text){ return `<button class="spk" data-say="${esc(clean(text))}" aria-label="발음 듣기">${ICON}</button>`; }
+let voice=null;
+function pickVoice(){ try{ const vs=speechSynthesis.getVoices(); voice=vs.find(v=>/en-US/i.test(v.lang)&&/Samantha|Google|Jenny|Aria/i.test(v.name))||vs.find(v=>/^en(-|_)US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null; }catch(e){} }
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function say(text, btn){
+  if(!("speechSynthesis" in window)){ alert("이 기기에서는 발음 듣기가 지원되지 않아요."); return; }
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text); u.lang="en-US"; u.rate=0.85; if(voice) u.voice=voice;
+  document.querySelectorAll(".spk.on").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on"); u.onend=u.onerror=()=>btn.classList.remove("on");
+  speechSynthesis.speak(u);
+}
+
+function shuffle(n,seed){
+  const a=[...Array(n).keys()]; let x=seed*7+3;
+  for(let i=n-1;i>0;i--){ x=(x*9301+49297)%233280; const j=Math.floor(x/233280*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  if(a.every((v,i)=>v===i)) a.reverse();
+  return a;
+}
+
+function crumb(extra){
+  return `<ol class="crumb"><li>고등영어</li><li>모의고사 준비</li><li>자이스토리</li><li>M 빈칸 (가운데)</li>${extra?`<li>${extra}</li>`:""}</ol>`;
+}
+
+function renderList(){
+  const items = PASSAGES.filter(p=>state.topic==="전체"||p.topic===state.topic);
+  app.innerHTML = `
+   ${crumb()}
+   <header class="hero">
+     <h1>빈칸이 가운데 있는 지문</h1>
+     <p>글 중간의 <span class="blank-demo" aria-hidden="true"></span> 를 채우려면 앞뒤 흐름을 잡아야 해요. 배경지식부터 읽고 시작하세요.</p>
+   </header>
+   <details class="howto">
+     <summary>빈칸 추론, 이렇게 풀어요</summary>
+     <ol>
+       <li><b>빈칸 문장부터</b> 읽고, 빈칸에 어떤 내용이 와야 하는지 정해요.</li>
+       <li><b>빈칸 앞뒤 1~2문장</b>에서 근거를 찾아요. 답은 거의 항상 이 근처에 있어요.</li>
+       <li><b>반복되는 말</b>을 찾아요. 여러 번 나오는 말이 글의 주제이고, 빈칸의 답이 돼요.</li>
+       <li><b>연결어</b>를 확인해요. Thus·So는 결론, But·However는 반전, For example은 예시예요.</li>
+       <li><b>선택지 함정</b>을 피해요. 지문 단어를 섞어 놓은 오답, 정반대 오답, 지문에 없는 내용을 조심해요.</li>
+     </ol>
+   </details>
+   <div class="chips" role="group" aria-label="주제 고르기">
+     ${TOPICS.map(t=>`<button class="chip" aria-pressed="${t===state.topic}" data-topic="${t}">${t}</button>`).join("")}
+   </div>
+   <ul class="list">
+     ${items.map(p=>`<li><button class="row" data-open="${p.no}">
+        <span class="row-no">${p.no}</span>
+        <span><span class="row-title">${esc(p.title)}</span><br><span class="row-meta">${p.topic} · ${p.src}</span></span>
+        <span class="row-state ${p.bg?"ready":""}">${p.bg?"학습하기":"준비 중"}</span>
+     </button></li>`).join("")}
+   </ul>
+   <p class="foot">고래영어학원 · 자이스토리 영어 독해 기본 M. 빈칸 완성하기</p>`;
+}
+
+function renderDetail(){
+  const p = PASSAGES.find(x=>x.no===state.open);
+  const tabs = [["bg","배경지식"],["vocab","어휘·구"],["sent","구문"],["solve","문제 풀기"],["flow","흐름·정답"],["quiz","확인 퀴즈"]];
+  let body = "";
+  if(!p.bg){
+    body = `<div class="empty">이 지문은 아직 준비 중이에요. 다른 지문부터 공부해 주세요.</div>`;
+  } else if(state.tab==="bg"){
+    body = `<h3>읽기 전에 알아 두기</h3><ul class="bg-list">${p.bg.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>`;
+  } else if(state.tab==="vocab"){
+    const isPh = t => t.endsWith("구");
+    const list = p.vocab.filter(v=>state.vf==="all"||(state.vf==="ph"?isPh(v[1]):!isPh(v[1])));
+    const nW = p.vocab.filter(v=>!isPh(v[1])).length, nP = p.vocab.length-nW;
+    body = `<div class="tools" style="justify-content:space-between">
+       <div class="v-filter" role="group" aria-label="어휘 종류">
+         <button class="chip" aria-pressed="${state.vf==="all"}" data-vf="all">전체 ${p.vocab.length}</button>
+         <button class="chip" aria-pressed="${state.vf==="w"}" data-vf="w">단어 ${nW}</button>
+         <button class="chip" aria-pressed="${state.vf==="ph"}" data-vf="ph">구 ${nP}</button>
+       </div>
+       <button class="toggle" id="hide">${state.hide?"뜻 보이기":"뜻 가리기"}</button></div>
+     <ul class="vocab ${state.hide?"hide-mean":""}">${list.map(v=>`<li>
+        <div class="v-top"><span class="v-word">${esc(v[0])}</span><span class="v-type ${isPh(v[1])?"ph":""}">${v[1]}</span>${spk(v[0])}</div>
+        <span class="v-mean">${esc(v[2])}</span>
+        <span class="v-easy">${esc(v[3])}</span>
+        ${v[4]?`<span class="v-more">${esc(v[4])}</span>`:""}
+     </li>`).join("")}</ul>`;
+  } else if(state.tab==="sent"){
+    body = `<h3>어려운 문장 끊어 읽기</h3>
+     <div class="legend"><span style="--c:var(--r-s)">주어</span><span style="--c:var(--r-v)">동사</span><span style="--c:var(--r-o)">목적어</span><span style="--c:var(--r-mod)">수식어</span><span style="--c:var(--mark)">핵심 구조</span></div>
+     <ol class="sent">${p.sentences.map((x,i)=>`<li>
+       <p class="s-full"><span class="s-num">${i+1}</span>${x.full}${spk(x.full)}</p>
+       <ul class="chunks">${x.chunks.map(c=>`<li data-r="${c[0]}"><span class="c-en"><span class="c-role">${c[1]}</span>${esc(c[2])}</span><span class="c-kr">${esc(c[3])}</span></li>`).join("")}</ul>
+       <div class="point"><b>이 문장의 포인트</b>${esc(x.point)}</div>
+       <p class="natural"><b>자연스러운 해석</b>${esc(x.kr)}</p></li>`).join("")}</ol>`;
+  } else if(state.tab==="solve"){
+    const q=p.question, picked=state.pick;
+    body = `<p class="q-stem">${esc(q.stem)}</p>
+     <p class="q-line">${q.line}</p>
+     <p class="q-note">교재에서 지문을 끝까지 읽고 골라 보세요.</p>
+     <ul class="choices">${q.choices.map((c,i)=>{
+        let cls=""; if(picked!==null){ if(i===q.correct) cls="right"; else if(i===picked) cls="wrong"; }
+        return `<li><button class="choice ${cls}" data-pick="${i}" ${picked!==null?"disabled":""}><span class="n">${NUM[i]}</span><span>${esc(c)}</span></button></li>`;}).join("")}</ul>
+     ${picked===null?"":(picked===q.correct
+       ? `<div class="feedback ok"><b>정답이에요!</b>근거 문장과 다른 선택지가 왜 틀렸는지도 확인해 보세요.</div>
+          <div class="row-btns"><button class="btn" data-tab="flow">흐름·정답 보기</button></div>`
+       : `<div class="feedback no"><b>아쉬워요. 정답은 ${NUM[q.correct]}번이에요.</b>근거 문장을 다시 보면 왜 ${NUM[q.correct]}번인지 보여요.</div>
+          <div class="row-btns"><button class="btn" data-tab="flow">근거 문장 보러 가기</button><button class="btn ghost" id="retry">다시 풀기</button></div>`)}`;
+  } else if(state.tab==="flow"){
+    const c=p.core;
+    body = `<h3>글의 핵심</h3>
+     <dl class="core">
+       <div><dt>소재</dt><dd>${esc(c.material)}</dd></div>
+       <div><dt>화제</dt><dd>${esc(c.topic)}</dd></div>
+       <div><dt>주제</dt><dd><span class="en">${esc(c.themeEn)}</span>${esc(c.themeKr)}</dd></div>
+       <div class="gist"><dt>요지</dt><dd>${esc(c.gist)}</dd></div>
+     </dl>
+     <h3>정답의 근거가 되는 문장</h3>
+     <ol class="flow">${p.flow.map(f=>`<li class="${f.key?"key":""}"><span class="f-label">${f.label}</span><div class="f-en">${f.en}</div><div class="f-kr">${esc(f.kr)}</div><div class="f-why">${esc(f.why)}</div></li>`).join("")}</ol>
+     <div class="tip"><b>빈칸 팁</b> ${esc(p.tip)}</div>
+     ${(state.showAns||state.pick!==null)
+       ? `<div class="answer"><b>정답 ${p.answer.no}</b><div class="a-en">${esc(p.answer.en)}</div><div>${esc(p.answer.kr)}</div></div>
+          <h3>오답은 왜 틀렸을까</h3>
+          <ul class="wrong-list">${p.wrong.map(w=>`<li><div class="w-head"><span>${w[0]}</span>${esc(w[1])}</div>${esc(w[2])}</li>`).join("")}</ul>
+          <div class="row-btns"><button class="btn" data-tab="quiz">확인 퀴즈 풀기</button></div>`
+       : `<button class="answer-btn" id="ans">정답과 오답 분석 보기</button>`}`;
+  } else if(state.tab==="quiz"){
+    const Q=p.quiz, A=state.qa;
+    const SECS=[["vocab","어휘·구"],["grammar","어법"],["tf","내용 일치"],["write","라이팅"]];
+    const n=k=>Q[k].length;
+    const answered=(k,i)=>k==="write"?!!(A.write[i]&&A.write[i].done):A[k][i]!==undefined;
+    const isRight=(k,i)=>k==="write"?!!(A.write[i]&&A.write[i].ok):A[k][i]===Q[k][i].a;
+    const doneN=k=>Q[k].filter((_,i)=>answered(k,i)).length;
+    const rightN=k=>Q[k].filter((_,i)=>answered(k,i)&&isRight(k,i)).length;
+    const all=SECS.every(([k])=>doneN(k)===n(k));
+    const sec=state.qsec, i=state.qi[sec], x=Q[sec][i], got=A[sec][i];
+    const NUMS=["①","②","③","④"];
+    let card="", fb="";
+
+    if(sec==="vocab"){
+      card=`<p class="qz-q">${esc(x.q)}</p><div class="qz-opts">${x.o.map((o,j)=>{
+        let c=""; if(got!==undefined){ c=j===x.a?"right":(j===got?"wrong":"dim"); }
+        return `<button class="qz-opt ${c}" data-ans="${j}" ${got!==undefined?"disabled":""}><span class="qz-n">${NUMS[j]}</span>${esc(o)}</button>`;}).join("")}</div>`;
+      if(got!==undefined) fb = got===x.a
+        ? `<div class="fb ok"><p class="fb-t">정답이에요</p><p>${esc(x.why)}</p></div>`
+        : `<div class="fb no"><p class="fb-t">아쉬워요. 정답은 ${NUMS[x.a]} ${esc(x.o[x.a])}</p><p><b>내가 고른 ${NUMS[got]}</b> ${esc(x.e[got])}</p><p><b>정답 ${NUMS[x.a]}의 이유</b> ${esc(x.why)}</p></div>`;
+    } else if(sec==="grammar"){
+      const box = got===undefined
+        ? `<span class="gbox"><span>${esc(x.o[0])}</span><i>/</i><span>${esc(x.o[1])}</span></span>`
+        : `<span class="gbox filled ${got===x.a?"ok":"no"}">${esc(x.o[x.a])}</span>`;
+      card=`<p class="qz-hint">네모 안에서 어법상 알맞은 것을 고르세요.</p>
+        <p class="g-sent">${esc(x.pre)} ${box} ${esc(x.post)}</p>
+        <div class="qz-opts two">${x.o.map((o,j)=>{
+          let c=""; if(got!==undefined){ c=j===x.a?"right":(j===got?"wrong":"dim"); }
+          return `<button class="qz-opt big ${c}" data-ans="${j}" ${got!==undefined?"disabled":""}>${esc(o)}</button>`;}).join("")}</div>`;
+      if(got!==undefined) fb = got===x.a
+        ? `<div class="fb ok"><p class="fb-t">정답이에요</p><p>${esc(x.why)}</p></div>`
+        : `<div class="fb no"><p class="fb-t">아쉬워요. 정답은 ${esc(x.o[x.a])}</p><p><b>내가 고른 ${esc(x.o[got])}</b> ${esc(x.wrong)}</p><p><b>정답 ${esc(x.o[x.a])}의 이유</b> ${esc(x.why)}</p></div>`;
+    } else if(sec==="tf"){
+      card=`<p class="qz-hint">글의 내용과 일치하면 O, 일치하지 않으면 X</p><p class="qz-q">${esc(x.s)}</p>
+        <div class="qz-opts two">${[true,false].map(v=>{
+          let c=""; if(got!==undefined){ c=v===x.a?"right":(v===got?"wrong":"dim"); }
+          return `<button class="qz-opt ox ${c}" data-ans="${v}" ${got!==undefined?"disabled":""}>${v?"O":"X"}</button>`;}).join("")}</div>`;
+      if(got!==undefined) fb=`<div class="fb ${got===x.a?"ok":"no"}"><p class="fb-t">${got===x.a?"정답이에요":"아쉬워요. 정답은 "+(x.a?"O":"X")}</p>
+        <p><b>지문 근거</b></p><p class="fb-en">${esc(x.en)}</p><p>${esc(x.kr)}</p>
+        ${x.a?"":`<p><b>그래서</b> 문제의 내용은 지문과 달라요.</p>`}</div>`;
+    } else {
+      const st=A.write[i]||(A.write[i]={pick:[],checked:false,ok:false,done:false,hint:false,order:shuffle(x.c.length,i+p.no.length)});
+      const show=j=>j===0?x.c[j].charAt(0).toLowerCase()+x.c[j].slice(1):x.c[j];
+      const placed=st.pick.map((j,k)=>{
+        let c="in"; if(st.checked) c+= (j===k?" pos-ok":" pos-no");
+        const txt=k===0?x.c[j].charAt(0).toUpperCase()+x.c[j].slice(1):show(j);
+        return `<button class="w-chip ${c}" data-out="${k}" ${st.checked?"disabled":""}>${esc(txt)}</button>`;}).join("");
+      card=`<p class="qz-hint">우리말에 맞게 덩어리를 눌러 순서대로 놓으세요. 놓은 덩어리를 누르면 빠져요.</p>
+        <p class="qz-q">${esc(x.kr)}</p>
+        <div class="w-slot ${st.checked?(st.ok?"ok":"no"):""}">${placed||'<span class="w-ph">여기에 덩어리를 놓으세요</span>'}</div>
+        ${st.done?"":`<div class="w-bank">${st.order.map(j=>st.pick.includes(j)?"":`<button class="w-chip" data-in="${j}">${esc(show(j))}</button>`).join("")}</div>`}
+        ${st.hint&&!st.done?`<div class="w-hint"><b>힌트</b> ${esc(x.hint)}</div>`:""}
+        ${st.done?"":`<div class="row-btns">
+           <button class="btn" data-wchk ${st.pick.length===x.c.length&&!st.checked?"":"disabled"}>확인</button>
+           ${st.hint?"":`<button class="btn ghost" data-whint>힌트 보기</button>`}
+           ${st.pick.length&&!st.checked?`<button class="btn ghost" data-wclr>처음부터</button>`:""}</div>`}`;
+      if(st.checked&&!st.ok&&!st.done) fb=`<div class="fb no"><p class="fb-t">아쉬워요. 빨간 덩어리의 자리가 틀렸어요</p><p><b>순서 힌트</b> ${esc(x.hint)}</p>
+         <div class="row-btns"><button class="btn" data-wretry>틀린 것만 다시 놓기</button><button class="btn ghost" data-wgive>정답 보기</button></div></div>`;
+      if(st.done) fb=`<div class="fb ${st.ok?"ok":"no"}"><p class="fb-t">${st.ok?"정확해요":"정답 문장"}</p>
+         <div class="w-ans">${x.c.map((c,j)=>`<span class="w-a"><span class="w-r">${esc(x.r[j])}</span>${esc(c)}</span>`).join("")}</div>
+         <p><b>포인트</b> ${esc(x.point)}</p></div>`;
+    }
+    const last=i===n(sec)-1, si=SECS.findIndex(s=>s[0]===sec), nextSec=SECS[si+1];
+    const nav=`<div class="qz-nav">
+       <button class="btn ghost" data-qprev ${i===0?"disabled":""}>이전</button>
+       ${!last?`<button class="btn" data-qnext ${answered(sec,i)?"":"disabled"}>다음 문제</button>`
+         :nextSec&&!all?`<button class="btn" data-qsec="${nextSec[0]}" ${answered(sec,i)?"":"disabled"}>다음: ${nextSec[1]}</button>`
+         :all?`<button class="btn" data-qresult>결과 보기</button>`:`<span></span>`}</div>`;
+    const result=state.qres&&all?`<div class="score"><strong>${SECS.reduce((t,[k])=>t+rightN(k),0)} / ${SECS.reduce((t,[k])=>t+n(k),0)}</strong>
+       <div class="sc-rows">${SECS.map(([k,l])=>`<div><span>${l}</span><b>${rightN(k)} / ${n(k)}</b></div>`).join("")}</div>
+       ${SECS.every(([k])=>rightN(k)===n(k))?`<p>${p.no} 학습 완료! 모두 맞았어요.</p>`:`<p>점수가 낮은 영역을 다시 풀어 보세요.</p>`}
+       <div class="row-btns" style="justify-content:center"><button class="btn ghost" id="requiz">퀴즈 다시 풀기</button></div></div>`:"";
+    body=`<div class="q-secs" role="group" aria-label="퀴즈 영역">${SECS.map(([k,l])=>`<button class="chip" aria-pressed="${k===sec&&!state.qres}" data-qsec="${k}">${l}<span class="q-cnt">${doneN(k)}/${n(k)}</span></button>`).join("")}</div>
+      ${result || `<div class="qz-top"><span>${SECS[si][1]}</span><span>${i+1} / ${n(sec)}</span></div>
+      <div class="qz-bar"><i style="width:${(i+1)/n(sec)*100}%"></i></div>
+      <div class="qz-card">${card}</div>${fb}${nav}`}`;
+  }
+  app.innerHTML = `
+   ${crumb(p.no)}
+   <button class="back" id="back">‹ 지문 목록</button>
+   <div class="d-head"><span class="d-no">${p.no}</span></div>
+   <h2 class="d-title">${esc(p.title)}</h2>
+   <p class="d-meta">${p.topic} · ${p.src} · 교재 지문을 펴 놓고 함께 보세요</p>
+   ${p.bg?`<div class="tabs" role="tablist">${tabs.map(t=>`<button class="tab" role="tab" aria-selected="${t[0]===state.tab}" data-tab="${t[0]}">${t[1]}</button>`).join("")}</div>`:""}
+   <section class="panel" role="tabpanel">${body}</section>`;
+}
+
+function render(){ state.open ? renderDetail() : renderList(); }
+
+app.addEventListener("click", e=>{
+  const t = e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ say(t.dataset.say,t); return; }
+  if(t.dataset.pick!==undefined){ state.pick=+t.dataset.pick; render(); return; }
+  if(state.tab==="quiz"&&state.open){
+    const sec=state.qsec, i=state.qi[sec], A=state.qa, st=A.write[i];
+    const go=()=>{ render(); };
+    if(t.dataset.ans!==undefined){ const v=t.dataset.ans; A[sec][i]= sec==="tf"?(v==="true"):+v; return go(); }
+    if(t.dataset.qsec){ state.qsec=t.dataset.qsec; state.qres=false; return go(); }
+    if(t.dataset.qnext!==undefined){ state.qi[sec]++; return go(); }
+    if(t.dataset.qprev!==undefined){ state.qi[sec]--; return go(); }
+    if(t.dataset.qresult!==undefined){ state.qres=true; return go(); }
+    if(t.dataset.in!==undefined){ st.pick.push(+t.dataset.in); return go(); }
+    if(t.dataset.out!==undefined){ st.pick.splice(+t.dataset.out,1); return go(); }
+    if(t.dataset.whint!==undefined){ st.hint=true; return go(); }
+    if(t.dataset.wclr!==undefined){ st.pick=[]; return go(); }
+    if(t.dataset.wchk!==undefined){ st.checked=true; st.ok=st.pick.every((v,k)=>v===k); if(st.ok) st.done=true; return go(); }
+    if(t.dataset.wretry!==undefined){ st.pick=st.pick.filter((v,k)=>v===k&&st.pick.slice(0,k+1).every((w,m)=>w===m)); st.checked=false; st.tried=true; return go(); }
+    if(t.dataset.wgive!==undefined){ st.pick=Object.keys(st.pick).map(Number); st.done=true; st.ok=false; return go(); }
+  }
+  if(t.id==="retry"){ state.pick=null; render(); return; }
+  if(t.id==="requiz"){ state.qa=freshQA(); state.qsec="vocab"; state.qi=freshQI(); state.qres=false; render(); window.scrollTo(0,0); return; }
+  if(t.dataset.vf){ state.vf=t.dataset.vf; render(); return; }
+  if(t.dataset.topic){ state.topic=t.dataset.topic; render(); }
+  else if(t.dataset.open){ state.open=t.dataset.open; state.tab="bg"; state.showAns=false; state.pick=null; state.qa=freshQA(); state.qsec="vocab"; state.qi=freshQI(); state.qres=false; render(); window.scrollTo(0,0); }
+  else if(t.id==="back"){ state.open=null; render(); }
+  else if(t.dataset.tab){ if("speechSynthesis" in window) speechSynthesis.cancel(); state.tab=t.dataset.tab; render(); window.scrollTo(0,0); }
+  else if(t.id==="hide"){ state.hide=!state.hide; render(); }
+  else if(t.id==="ans"){ state.showAns=true; render(); }
+});
+render();
+</script>
+</body>
+</html>

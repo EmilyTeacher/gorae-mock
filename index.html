@@ -29,6 +29,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--sea);outline-offset:2px;border-radius:4px}
 
+.homebtn{display:inline-flex;align-items:center;gap:6px;margin:0 0 14px;padding:9px 16px;border-radius:999px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:-.01em}
+.homebtn:hover{opacity:.9}
+.homebtn:focus-visible{outline:3px solid var(--sea);outline-offset:2px}
 .crumb{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:13px;color:var(--ink-soft);margin:0 0 18px;padding:0;list-style:none}
 .crumb li+li::before{content:"›";margin-right:6px;color:var(--line)}
 .crumb li:last-child{color:var(--ink);font-weight:600}
@@ -2826,7 +2829,7 @@ function renderNameGate(){
     <p style="font-weight:700;font-size:18px;margin:0 0 6px">이름을 입력해 주세요</p>
     <p style="margin:0 0 14px;color:var(--mute,#666)">학습 기록이 선생님께 전달돼요. 학원에 등록된 이름 그대로 써 주세요.</p>
     <form id="nameForm"><input id="nameIn" maxlength="20" autocomplete="off" placeholder="예: 홍길동" style="font-size:16px;padding:12px;border:1px solid #bbb;border-radius:10px;width:min(260px,80%)">
-    <div style="margin-top:12px"><button class="btn" type="submit">시작하기</button> <button class="btn ghost" type="button" id="nameBack">목록으로</button></div></form></div>`;
+    <div style="margin-top:12px"><button class="btn" type="submit">시작하기</button> <button class="btn ghost" type="button" id="nameBack">목록으로</button> <a class="btn ghost" href="${HOME_URL}" style="text-decoration:none;display:inline-block">고래고등영어 홈</a></div></form></div>`;
   const f=document.getElementById("nameForm");
   f.addEventListener("submit",e=>{ e.preventDefault(); const v=document.getElementById("nameIn").value.trim(); if(!v) return;
     studentName=v; LS.set("gorae_mock_name",v); flushOutbox(); render(); });
@@ -2861,8 +2864,9 @@ function shuffle(n,seed){
   return a;
 }
 
+const HOME_URL = "https://gorae-learning-app-builder.ezzang.chatgpt.site/library?level=mock_exam"; // 고래고등영어 앱(모의고사 자료실)
 function crumb(extra){
-  return `<ol class="crumb"><li>고등영어</li><li>모의고사 준비</li><li>자이스토리</li><li>M 빈칸 (가운데)</li>${extra?`<li>${extra}</li>`:""}</ol>`;
+  return `<a class="homebtn" href="${HOME_URL}"><span aria-hidden="true">‹</span> 고래고등영어 홈</a><ol class="crumb"><li>고등영어</li><li>모의고사 준비</li><li>자이스토리</li><li>M 빈칸 (가운데)</li>${extra?`<li>${extra}</li>`:""}</ol>`;
 }
 
 function renderList(){

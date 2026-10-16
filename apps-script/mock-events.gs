@@ -7,14 +7,16 @@
  * 기존 drill_events / vocab_test_events 는 읽지도 쓰지도 않는다.
  *
  * 저장 조건
- *  - student_name 이 학습관리 '학생명단' 탭의 '학생명' 열에 있거나, 테스트 계정(TEST_NAMES)일 것
+ *  - student_name 이 학습관리 선생님 수업관리 '학생·반 설정' 탭의 '학생 이름' 열(상태가 '사용'인 학생)에 있거나, 테스트 계정(TEST_NAMES)일 것
  *  - 같은 event_id 는 한 번만 저장
  * 테스트 계정은 기록은 남지만 LIVE·원장·선생님 집계에서는 제외한다(TEST_NAMES 이름으로 거른다).
  */
 var DRILL_DATA_ID = '10oRTZ9iIj2f30rR0qwdQ8xX9DVhj1fUXSMpcj0c9iPQ'; // GORAE_DRILL_DATA
-var ROSTER_SS_ID = '1LHdBJK8FeFKK6lq5qJ38rZwZg4LSvinGTCmvOPycFds';  // 2026년 학습관리
-var ROSTER_SHEET = '학생명단';
-var ROSTER_NAME_HEADER = '학생명';
+var ROSTER_SS_ID = '1_vWgkusAj7XNVwfYj_-zxQfeH30TxJW3th6X0uN3tyQ';  // 2026 고래영어 선생님 수업관리
+var ROSTER_SHEET = '학생·반 설정'; // 학원 전체 학생(수업 반 / 학생 이름 / 상태)
+var ROSTER_NAME_HEADER = '학생 이름';
+var ROSTER_STATUS_HEADER = '상태';
+var ROSTER_ACTIVE = '사용';
 var TEST_NAMES = ['모의고사연결테스트'];
 
 var ANSWER_SHEET = 'mock_events';
@@ -74,11 +76,12 @@ function validate_(b) {
   return '';
 }
 
-// 학생명단 탭의 '학생명' 열(없으면 거부) + 테스트 계정. 10분 캐시.
+// 선생님 수업관리 '학생·반 설정'의 '학생 이름' 열 중 상태가 '사용'인 학생 + 테스트 계정. 10분 캐시.
+// 헤더 칸에 안내 문구가 같이 들어 있어도 되도록 '학생 이름'/'상태'로 시작하는 칸을 찾는다.
 function inRoster_(name) {
   if (TEST_NAMES.indexOf(name) >= 0) return true;
   var cache = CacheService.getScriptCache();
-  var raw = cache.get('roster_names');
+  var raw = cache.get('roster_names_v2');
   var names;
   if (raw) {
     names = JSON.parse(raw);
@@ -86,14 +89,24 @@ function inRoster_(name) {
     var sh = SpreadsheetApp.openById(ROSTER_SS_ID).getSheetByName(ROSTER_SHEET);
     if (!sh) throw new Error(ROSTER_SHEET + ' 시트를 찾을 수 없습니다.');
     var vals = sh.getDataRange().getValues();
-    var col = vals[0].map(function (h) { return String(h).trim(); }).indexOf(ROSTER_NAME_HEADER);
-    if (col < 0) throw new Error(ROSTER_SHEET + ' 에서 "' + ROSTER_NAME_HEADER + '" 열을 찾을 수 없습니다.');
-    names = [];
-    for (var r = 1; r < vals.length; r++) {
-      var s = String(vals[r][col]).trim();
-      if (s) names.push(s);
+    var hr = -1, nameCol = -1, statusCol = -1;
+    for (var r = 0; r < Math.min(vals.length, 10) && hr < 0; r++) {
+      for (var c = 0; c < vals[r].length; c++) {
+        var h = String(vals[r][c]).trim();
+        if (h.indexOf(ROSTER_NAME_HEADER) === 0) nameCol = c;
+        if (h.indexOf(ROSTER_STATUS_HEADER) === 0) statusCol = c;
+      }
+      if (nameCol >= 0) hr = r; else statusCol = -1;
     }
-    cache.put('roster_names', JSON.stringify(names), 600);
+    if (hr < 0) throw new Error(ROSTER_SHEET + ' 에서 "' + ROSTER_NAME_HEADER + '" 열을 찾을 수 없습니다.');
+    names = [];
+    for (var k = hr + 1; k < vals.length; k++) {
+      var s = String(vals[k][nameCol]).trim();
+      if (!s) continue;
+      if (statusCol >= 0 && String(vals[k][statusCol]).trim() !== ROSTER_ACTIVE) continue;
+      names.push(s);
+    }
+    cache.put('roster_names_v2', JSON.stringify(names), 600);
   }
   return names.indexOf(name) >= 0;
 }

@@ -847,6 +847,51 @@ function freshQI(){ return {vocab:0,grammar:0,tf:0,write:0}; }
 let state = {topic:"전체", open:null, tab:"bg", hide:false, showAns:false, vf:"all", pick:null, qa:freshQA(), qsec:"vocab", qi:freshQI(), qres:false};
 const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
+// ── 학습 기록 (GORAE_DRILL_DATA mock_events) ──
+// MOCK_HOOK이 비어 있으면 전송하지 않는다. 같은 event_id는 서버가 한 번만 저장하므로 재전송해도 안전하다.
+const MOCK_HOOK = "https://script.google.com/macros/s/AKfycbwaSqq_KJ6PhyIDSX4oo5aS74-qv_EZk_xy3od0Ex3IJmbW61rnSOH0Qocg4gq-k5cHAA/exec";
+const LS = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+};
+const rid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2));
+let studentName = (LS.get("gorae_mock_name")||"").trim();
+let outbox = []; try{ outbox = JSON.parse(LS.get("gorae_mock_outbox_v1")||"[]"); }catch(e){}
+let flushing = false;
+function saveOutbox(){ LS.set("gorae_mock_outbox_v1", JSON.stringify(outbox.slice(-500))); }
+async function flushOutbox(){
+  if(!MOCK_HOOK || flushing || !studentName) return;
+  flushing = true;
+  try{
+    while(outbox.length){
+      const ev = outbox[0];
+      await fetch(MOCK_HOOK, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(ev)});
+      outbox.shift(); saveOutbox();
+    }
+  }catch(e){ /* 네트워크 실패: 보관함에 남겨 두고 다음에 다시 보낸다 */ }
+  flushing = false;
+}
+function record(section, qIndex, isCorrect, picked){
+  if(!studentName) return;
+  const p = PASSAGES.find(x=>x.no===state.open); if(!p) return;
+  outbox.push({event_type:"mock_answer", event_id:state.attempt+":"+section+":"+qIndex+":"+rid().slice(0,8),
+    attempt_id:state.attempt, student_name:studentName, passage_no:p.no, passage_title:p.title, section:section,
+    q_index:qIndex+1, is_correct:!!isCorrect, picked:String(picked), answered_at:new Date().toISOString()});
+  saveOutbox(); flushOutbox();
+}
+addEventListener("online", flushOutbox); flushOutbox();
+function renderNameGate(){
+  app.innerHTML = `<div class="empty" style="text-align:center">
+    <p style="font-weight:700;font-size:18px;margin:0 0 6px">이름을 입력해 주세요</p>
+    <p style="margin:0 0 14px;color:var(--mute,#666)">학습 기록이 선생님께 전달돼요. 학원에 등록된 이름 그대로 써 주세요.</p>
+    <form id="nameForm"><input id="nameIn" maxlength="20" autocomplete="off" placeholder="예: 홍길동" style="font-size:16px;padding:12px;border:1px solid #bbb;border-radius:10px;width:min(260px,80%)">
+    <div style="margin-top:12px"><button class="btn" type="submit">시작하기</button> <button class="btn ghost" type="button" id="nameBack">목록으로</button></div></form></div>`;
+  const f=document.getElementById("nameForm");
+  f.addEventListener("submit",e=>{ e.preventDefault(); const v=document.getElementById("nameIn").value.trim(); if(!v) return;
+    studentName=v; LS.set("gorae_mock_name",v); flushOutbox(); render(); });
+  document.getElementById("nameBack").addEventListener("click",()=>{ state.open=null; render(); });
+}
+
 const ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
 const clean = t => String(t).replace(/<[^>]+>/g," ").replace(/_+|~/g," ").replace(/\bV\b/g,"").replace(/\s+/g," ").trim();
 function spk(text){ return `<button class="spk" data-say="${esc(clean(text))}" aria-label="발음 듣기">${ICON}</button>`; }
@@ -1055,7 +1100,7 @@ function renderDetail(){
    <section class="panel" role="tabpanel">${body}</section>`;
 }
 
-function render(){ state.open ? renderDetail() : renderList(); }
+function render(){ if(state.open && !studentName) return renderNameGate(); state.open ? renderDetail() : renderList(); }
 
 function clearAuto(){
   if(state.autoT){ clearTimeout(state.autoT); state.autoT=null; }
@@ -1073,12 +1118,13 @@ app.addEventListener("click", e=>{
   clearAuto();
   const t = e.target.closest("button"); if(!t) return;
   if(t.dataset.say!==undefined){ say(t.dataset.say,t); return; }
-  if(t.dataset.pick!==undefined){ state.pick=+t.dataset.pick; render(); return; }
+  if(t.dataset.pick!==undefined){ state.pick=+t.dataset.pick; record("solve",0,state.pick===PASSAGES.find(x=>x.no===state.open).question.correct,NUM[state.pick]); render(); return; }
   if(state.tab==="quiz"&&state.open){
     const sec=state.qsec, i=state.qi[sec], A=state.qa, st=A.write[i];
     const go=()=>{ render(); };
     if(t.dataset.ans!==undefined){ const v=t.dataset.ans; A[sec][i]= sec==="tf"?(v==="true"):+v;
       const Qx=PASSAGES.find(x=>x.no===state.open).quiz[sec][i];
+      record(sec,i,A[sec][i]===Qx.a,A[sec][i]);
       if(A[sec][i]===Qx.a && autoNext(sec,i,sec==="vocab"?800:2500)) return; return go(); }
     if(t.dataset.qsec){ state.qsec=t.dataset.qsec; state.qres=false; return go(); }
     if(t.dataset.qnext!==undefined){ state.qi[sec]++; return go(); }
@@ -1088,7 +1134,7 @@ app.addEventListener("click", e=>{
     if(t.dataset.out!==undefined){ st.pick.splice(+t.dataset.out,1); return go(); }
     if(t.dataset.whint!==undefined){ st.hint=true; return go(); }
     if(t.dataset.wclr!==undefined){ st.pick=[]; return go(); }
-    if(t.dataset.wchk!==undefined){ st.checked=true; st.ok=st.pick.every((v,k)=>v===k); if(st.ok) st.done=true; if(st.ok && autoNext(sec,i,2500)) return; return go(); }
+    if(t.dataset.wchk!==undefined){ st.checked=true; st.ok=st.pick.every((v,k)=>v===k); record("write",i,st.ok,st.pick.join(">")); if(st.ok) st.done=true; if(st.ok && autoNext(sec,i,2500)) return; return go(); }
     if(t.dataset.wretry!==undefined){ st.pick=st.pick.filter((v,k)=>v===k&&st.pick.slice(0,k+1).every((w,m)=>w===m)); st.checked=false; st.tried=true; return go(); }
     if(t.dataset.wgive!==undefined){ st.pick=Object.keys(st.pick).map(Number); st.done=true; st.ok=false; return go(); }
   }
@@ -1096,7 +1142,7 @@ app.addEventListener("click", e=>{
   if(t.id==="requiz"){ state.qa=freshQA(); state.qsec="vocab"; state.qi=freshQI(); state.qres=false; render(); window.scrollTo(0,0); return; }
   if(t.dataset.vf){ state.vf=t.dataset.vf; render(); return; }
   if(t.dataset.topic){ state.topic=t.dataset.topic; render(); }
-  else if(t.dataset.open){ state.open=t.dataset.open; state.tab="bg"; state.showAns=false; state.pick=null; state.qa=freshQA(); state.qsec="vocab"; state.qi=freshQI(); state.qres=false; render(); window.scrollTo(0,0); }
+  else if(t.dataset.open){ state.open=t.dataset.open; state.attempt=rid(); state.tab="bg"; state.showAns=false; state.pick=null; state.qa=freshQA(); state.qsec="vocab"; state.qi=freshQI(); state.qres=false; render(); window.scrollTo(0,0); }
   else if(t.id==="back"){ state.open=null; render(); }
   else if(t.dataset.tab){ if("speechSynthesis" in window) speechSynthesis.cancel(); state.tab=t.dataset.tab; render(); window.scrollTo(0,0); }
   else if(t.id==="hide"){ state.hide=!state.hide; render(); }

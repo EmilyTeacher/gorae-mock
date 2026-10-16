@@ -2779,10 +2779,13 @@ async function flushOutbox(){
   try{
     while(outbox.length){
       const ev = outbox[0];
-      await fetch(MOCK_HOOK, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(ev)});
+      const ac = new AbortController(), tm = setTimeout(()=>ac.abort(), 20000); // 요청 하나가 멈춰도 줄 전체가 서지 않게
+      try{
+        await fetch(MOCK_HOOK, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(ev), signal:ac.signal});
+      } finally { clearTimeout(tm); }
       outbox.shift(); saveOutbox();
     }
-  }catch(e){ /* 네트워크 실패: 보관함에 남겨 두고 다음에 다시 보낸다 */ }
+  }catch(e){ /* 실패·시간 초과: 보관함에 남겨 두고 잠시 뒤 다시 보낸다 (같은 event_id라 서버가 중복 저장하지 않음) */ setTimeout(flushOutbox, 8000); }
   flushing = false;
 }
 function record(section, qIndex, isCorrect, picked){

@@ -26,7 +26,7 @@ var COMPLETE_SHEET = 'mock_complete';
 var COMPLETE_HEADERS = ['event_id', 'attempt_id', 'student_name', 'passage_no', 'passage_title',
   'rounds', 'first_try_correct', 'total', 'started_at', 'completed_at', 'received_at', 'course'];
 var COURSES = ['mock', 'news']; // 구분: mock=자이스토리 모의고사(M번호), news=영자신문(N번호). 없거나 모르는 값이면 mock
-var SECTIONS = ['solve', 'vocab', 'grammar', 'tf', 'write'];
+var SECTIONS = ['solve', 'vocab', 'grammar', 'tf', 'write', 'order', 'cloze']; // order·cloze = 영자신문 문제 풀기(끊어읽기 순서·빈칸)
 
 function doPost(e) {
   var lock = LockService.getScriptLock();

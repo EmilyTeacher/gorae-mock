@@ -58,7 +58,8 @@ function validate_(b) {
   if (!/^[\w:\-]{8,100}$/.test(String(b.event_id || ''))) return 'event_id';
   if (!/^[MN]\d{1,3}$/.test(String(b.passage_no || ''))) return 'passage_no';
   b.course = COURSES.indexOf(b.course) >= 0 ? b.course : 'mock';
-  if (b.passage_no.charAt(0) !== (b.course === 'news' ? 'N' : 'M')) return 'passage_no'; // 구분과 번호가 맞아야 함
+  // 영자신문(news)은 N번호만. 모의고사(mock)는 M번호(자이스토리 빈칸) 또는 N번호(자이스토리 '무관한 문장')를 쓴다 — 구분(course)으로 따로 집계되므로 겹치지 않는다.
+  if (b.course === 'news' && b.passage_no.charAt(0) !== 'N') return 'passage_no';
   var name = String(b.student_name || '').trim();
   if (!name || name.length > 20) return 'student_name';
   if (!inRoster_(name)) return 'unknown_student';

@@ -6524,7 +6524,9 @@ function entryAllowed(){
   if(linkName || (document.referrer||"").indexOf(APP_ORIGIN)===0 || /(^|\.)(chatgpt\.site|chatgpt\.com|openai\.com|oaiusercontent\.com)$/.test(refHost)){ ss.set(); return true; }
   return ss.get()==="1";
 }
-const ENTRY_OK = entryAllowed();
+// 앱이 링크에 이름(?name=)/토큰(#lab=)을 싣거나 Referer를 보내기 전까지 임시로 끔 (원장님 승인). 다시 켜려면 true.
+const ENTRY_GATE_ON = false;
+const ENTRY_OK = !ENTRY_GATE_ON || entryAllowed();
 let outbox = []; try{ outbox = JSON.parse(LS.get("gorae_mock_outbox_v1")||"[]"); }catch(e){}
 let flushing = false;
 function saveOutbox(){ LS.set("gorae_mock_outbox_v1", JSON.stringify(outbox.slice(-500))); }

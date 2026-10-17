@@ -21,10 +21,11 @@ var TEST_NAMES = ['모의고사연결테스트'];
 
 var ANSWER_SHEET = 'mock_events';
 var ANSWER_HEADERS = ['event_id', 'attempt_id', 'student_name', 'passage_no', 'passage_title',
-  'section', 'q_index', 'is_correct', 'picked', 'answered_at', 'received_at', 'round'];
+  'section', 'q_index', 'is_correct', 'picked', 'answered_at', 'received_at', 'round', 'course'];
 var COMPLETE_SHEET = 'mock_complete';
 var COMPLETE_HEADERS = ['event_id', 'attempt_id', 'student_name', 'passage_no', 'passage_title',
-  'rounds', 'first_try_correct', 'total', 'started_at', 'completed_at', 'received_at'];
+  'rounds', 'first_try_correct', 'total', 'started_at', 'completed_at', 'received_at', 'course'];
+var COURSES = ['mock', 'news']; // 구분: mock=자이스토리 모의고사(M번호), news=영자신문(N번호). 없거나 모르는 값이면 mock
 var SECTIONS = ['solve', 'vocab', 'grammar', 'tf', 'write'];
 
 function doPost(e) {
@@ -55,7 +56,9 @@ function validate_(b) {
   if (!b) return 'body';
   if (b.event_type !== 'mock_answer' && b.event_type !== 'mock_complete') return 'event_type';
   if (!/^[\w:\-]{8,100}$/.test(String(b.event_id || ''))) return 'event_id';
-  if (!/^M\d{1,3}$/.test(String(b.passage_no || ''))) return 'passage_no';
+  if (!/^[MN]\d{1,3}$/.test(String(b.passage_no || ''))) return 'passage_no';
+  b.course = COURSES.indexOf(b.course) >= 0 ? b.course : 'mock';
+  if (b.passage_no.charAt(0) !== (b.course === 'news' ? 'N' : 'M')) return 'passage_no'; // 구분과 번호가 맞아야 함
   var name = String(b.student_name || '').trim();
   if (!name || name.length > 20) return 'student_name';
   if (!inRoster_(name)) return 'unknown_student';
